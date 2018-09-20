@@ -11,7 +11,7 @@ const multer = require('multer');
 // 模块引用部分结束位置
 const app = express();
 // 定义各种参数
-let hostnamme = 'http://192.168.241.3:81';
+let hostnamme = 'http://localhost:81';
 let secret = 'course.app.myweb.www';
 //启用中间件
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,9 +24,9 @@ app.set('views', './views');
 global.conn = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'15208279175',
+    password:'root',
     port:3306,
-    database:'appdata'
+    database:'haha'
 });
 conn.connect();
 // 启用session
