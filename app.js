@@ -7,11 +7,11 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 global.md5 = require('md5');
 const svgCaptcha = require('svg-captcha');
-const multer = require('multer');
+global.multer = require('multer');
 // 模块引用部分结束位置
 const app = express();
 // 定义各种参数
-let hostnamme = 'http://192.168.241.3:81';
+let hostname = 'http://localhost:81/';
 let secret = 'course.app.myweb.www';
 //启用中间件
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,7 +24,7 @@ app.set('views', './views');
 global.conn = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'15208279175',
+    password:'root',
     port:3306,
     database:'appdata'
 });
@@ -38,16 +38,16 @@ app.use(session({
 }));
 
 // 文件上传
-const diskstorage = multer.diskStorage({
-    destination: function (req,file,cb) {
-        cb(null,`./uploads/${new Date().getFullYear()}/${(new Date().getMonth()+1).toString().padStart(2, '0')}`)
+global.diskstorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, `./uploads/${new Date().getFullYear()}/${(new Date().getMonth()+1).toString().padStart(2, '0')}`);
     },
     filename: function (req, file, cb) {
-        let filename = new Date().valueOf() + Math.random().toString().substr(2,8) + '.' + file.orignalname.split('.').app();
-        cb(null, filename);
+        let filename = new Date().valueOf() + '_' +  Math.random().toString().substr(2, 8) + '.' + file.originalname.split('.').pop();
+        cb(null, filename)
     }
 });
-const upload = multer({storage: diskstorage});
+global.upload = multer({storage: diskstorage});
 // 验证码图片
 app.get('/coder',(req, res)=>{
     var captcha = svgCaptcha.create({noise:4,ignoreChars: '0o1i', size:1,background:'#593fff',height:38,width:100});
@@ -56,11 +56,12 @@ app.get('/coder',(req, res)=>{
     res.type('svg'); //使用ejs等模板时如果报错res.type('html')
     res.status(200).send(captcha.data);
 });
-app.post('/uploads',upload.array('images',1000),(req,res)=>{
+app.post('/uploads',upload.array('photo',1000),(req,res)=>{
     console.log(req.files);
-    let data = [];
+
+    global.data = [];
     for (const ad of req.files) {
-        let path = hostname + ad.path.replace(/\\/g,'/');
+        let path = hostname+ad.path.replace(/\\/g,'/');
         data.push(path);
     }
     res.json({

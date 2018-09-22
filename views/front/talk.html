@@ -1,0 +1,72 @@
+<%  include top.html%>
+
+
+<div class="layui-col-md8 mainbody-right layui-anim layui-anim-scale talk">
+
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">所有动态</li>
+            <li>个人中心</li>
+            <li>添加动态</li>
+
+        </ul>
+<div class="layui-tab-content talkbody">
+    <div class="layui-tab-item ">内容1</div>
+    <div class="layui-tab-item">内容2</div>
+    <div class="layui-tab-item layui-show">
+
+
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label ">标题：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+                        class="layui-input title">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label ">内容：</label>
+                <div class="layui-input-block">
+                    <div id="editor" style="width:800px;"></div>
+                    <textarea id="pinfo" required lay-verify="required" placeholder="请输入" class="layui-textarea content" maxlength="300" name="content"></textarea>
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item talkimg">
+                 <ul class="talkimg-ul" >
+            
+                </ul>
+                       
+                <label class="header" for="images">
+                    <img src="/img/header.jpg" alt="" id="img">
+                </label>
+                <input type="file" name="photo" multiple id="images" >
+                <input type="" value="" id="imgval">
+                
+            </div>
+
+
+
+
+            <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" lay-submit lay-filter="addfrom" id="submit">提交</button>
+                    </div>
+                </div>
+        </form>
+
+
+
+    </div>
+
+        </div>
+    </div>
+
+</div>
+
+<% include footer.html%>
+<script src="/js/talk.js"></script>
+
